@@ -1,0 +1,7 @@
+name = "RSUtils"
+uuid = "e143dfff-3305-47d4-98d5-a04e12503fc3"
+authors = ["Ruairidh South <rsouth@princeton.edu>"]
+version = "0.1.0"
+
+[deps]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
