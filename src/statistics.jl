@@ -5,17 +5,15 @@ Compute the probability mass of `d` in equally-sized intervals with midpoints gi
 
 If `normalize`, then the probabilities are re-scaled such that their sum is 1.
 """
-function analytic_histogram(
-        d::Distributions.UnivariateDistribution,
-        G::LinRange;
-        normalize=true
-    )
+function analytic_histogram(d::Distributions.UnivariateDistribution,
+                            G::LinRange;
+                            normalize=true)
     cdf(x) = Distributions.cdf(d, x)
 
     mps = get_midpoints(G)
     hist = zeros(length(G))
     for i in eachindex(hist)
-        hist[i] = cdf(mps[i+1]) - cdf(mps[i])
+        hist[i] = cdf(mps[i + 1]) - cdf(mps[i])
     end
 
     if normalize
@@ -31,8 +29,5 @@ function get_midpoints(G::LinRange)
     half_step = step(G) / 2
     return LinRange(first(G) - half_step,
                     last(G) + half_step,
-                    length(G) + 1
-                   )
+                    length(G) + 1)
 end
-
-
