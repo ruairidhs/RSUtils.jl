@@ -33,15 +33,20 @@ function fixedpoint(iterate!, init, cache; distance=supnorm, maxiter=1000, tol=1
     x0, x1 = cache
     copy!(x0, init)
     err = zero(eltype(init))
+    err_old = zero(eltype(init))
 
     for iter in 1:maxiter
         iterate!(x1, x0)
         err = distance(x1, x0)
+        if iter > 1 && err >= err_old
+            @warn "Iteration: $iter; Error increased by $((err / err_old - 1) * 100)%"
+        end
         @debug "Iteration: $iter; Current error: $err"
         if err < tol
             return (value=x1, err=err, iter=iter, converged=true)
         else
             copy!(x0, x1)
+            err_old = err
         end
     end
     return (value=x1, err=err, iter=maxiter, converged=false)
