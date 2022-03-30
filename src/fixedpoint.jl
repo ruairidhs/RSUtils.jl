@@ -31,7 +31,7 @@ julia> fixedpoint((x1, x0) -> iterate!(x1, x0, 0.9), init, cache)
 """
 function fixedpoint(iterate!, init, cache; distance=supnorm, maxiter=1000, tol=1e-10)
     x0, x1 = cache
-    x0 .= init
+    copy!(x0, init)
     err = zero(eltype(init))
 
     for iter in 1:maxiter
@@ -47,6 +47,6 @@ function fixedpoint(iterate!, init, cache; distance=supnorm, maxiter=1000, tol=1
 end
 
 function fixedpoint(iterate!, init; distance=supnorm, maxiter=1000, tol=1e-10)
-    cache = (similar(init), similar(init))
+    cache = (copy(init), copy(init))
     return fixedpoint(iterate!, init, cache; distance=distance, maxiter=maxiter, tol=tol)
 end
