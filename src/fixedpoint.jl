@@ -37,6 +37,7 @@ function fixedpoint(iterate!, init, cache; distance=supnorm, maxiter=1000, tol=1
     for iter in 1:maxiter
         iterate!(x1, x0)
         err = distance(x1, x0)
+        @debug "Iteration: $iter; Current error: $err"
         if err < tol
             return (value=x1, err=err, iter=iter, converged=true)
         else
