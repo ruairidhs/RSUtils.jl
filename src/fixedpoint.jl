@@ -40,7 +40,7 @@ function fixedpoint(iterate!, init, cache; distance=supnorm, maxiter=1000, tol=1
         if err < tol
             return (value=x1, err=err, iter=iter, converged=true)
         else
-            x0 .= x1
+            copy!(x0, x1)
         end
     end
     return (value=x1, err=err, iter=maxiter, converged=false)
